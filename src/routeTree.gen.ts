@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as FilmlarRouteImport } from './routes/filmlar'
 import { Route as JanrlarRouteImport } from './routes/janrlar'
 import { Route as QidiruvRouteImport } from './routes/qidiruv'
@@ -19,6 +20,11 @@ import { Route as SeriallarRouteImport } from './routes/seriallar'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FilmlarRoute = FilmlarRouteImport.update({
@@ -49,6 +55,7 @@ const SeriallarRoute = SeriallarRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/filmlar': typeof FilmlarRoute
   '/janrlar': typeof JanrlarRoute
   '/qidiruv': typeof QidiruvRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/filmlar': typeof FilmlarRoute
   '/janrlar': typeof JanrlarRoute
   '/qidiruv': typeof QidiruvRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRoute
   '/filmlar': typeof FilmlarRoute
   '/janrlar': typeof JanrlarRoute
   '/qidiruv': typeof QidiruvRoute
@@ -75,13 +84,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/filmlar' | '/janrlar' | '/qidiruv' | '/saralanganlar' | '/seriallar'
+    | '/'
+    | '/admin'
+    | '/filmlar'
+    | '/janrlar'
+    | '/qidiruv'
+    | '/saralanganlar'
+    | '/seriallar'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/filmlar' | '/janrlar' | '/qidiruv' | '/saralanganlar' | '/seriallar'
+    | '/'
+    | '/admin'
+    | '/filmlar'
+    | '/janrlar'
+    | '/qidiruv'
+    | '/saralanganlar'
+    | '/seriallar'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/filmlar'
     | '/janrlar'
     | '/qidiruv'
@@ -91,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRoute
   FilmlarRoute: typeof FilmlarRoute
   JanrlarRoute: typeof JanrlarRoute
   QidiruvRoute: typeof QidiruvRoute
@@ -105,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/filmlar': {
@@ -147,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRoute,
   FilmlarRoute: FilmlarRoute,
   JanrlarRoute: JanrlarRoute,
   QidiruvRoute: QidiruvRoute,
