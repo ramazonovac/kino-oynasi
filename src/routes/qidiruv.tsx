@@ -3,6 +3,8 @@ import { zodValidator, fallback } from "@tanstack/zod-adapter";
 import { z } from "zod";
 import { Layout } from "@/components/Layout";
 import { TitleGrid } from "@/components/TitleGrid";
+import { Pagination } from "@/components/Pagination";
+import { usePagination } from "@/hooks/use-pagination";
 import { searchTitles } from "@/lib/catalog";
 
 const searchSchema = z.object({
@@ -30,6 +32,7 @@ export const Route = createFileRoute("/qidiruv")({
 function QidiruvPage() {
   const { q } = Route.useSearch();
   const results = searchTitles(q);
+  const { currentItems, page, totalPages, setPage } = usePagination(results, 12);
 
   return (
     <Layout>
@@ -39,10 +42,11 @@ function QidiruvPage() {
           {q ? `"${q}" bo'yicha ${results.length} ta natija` : "Qidiruv so'zini kiriting."}
         </p>
         <TitleGrid
-          items={results}
+          items={currentItems}
           emptyTitle="Hech narsa topilmadi"
           emptyText="Boshqa nom bilan qayta urinib ko'ring."
         />
+        <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
     </Layout>
   );

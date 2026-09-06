@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { TitleGrid } from "@/components/TitleGrid";
+import { Pagination } from "@/components/Pagination";
+import { usePagination } from "@/hooks/use-pagination";
 import { series } from "@/lib/catalog";
 
 export const Route = createFileRoute("/seriallar")({
@@ -21,6 +23,8 @@ export const Route = createFileRoute("/seriallar")({
 });
 
 function SeriallarPage() {
+  const { currentItems, page, totalPages, setPage } = usePagination(series, 12);
+
   return (
     <Layout>
       <div className="mx-auto max-w-7xl space-y-6 px-4 py-10">
@@ -29,10 +33,11 @@ function SeriallarPage() {
           Telegram orqali tomosha qilish mumkin bo'lgan seriallar.
         </p>
         <TitleGrid
-          items={series}
+          items={currentItems}
           emptyTitle="Serial topilmadi"
           emptyText="Tez orada yangi seriallar qo'shiladi."
         />
+        <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
     </Layout>
   );

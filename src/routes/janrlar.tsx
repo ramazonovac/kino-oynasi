@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Layout } from "@/components/Layout";
 import { TitleGrid } from "@/components/TitleGrid";
+import { Pagination } from "@/components/Pagination";
+import { usePagination } from "@/hooks/use-pagination";
 import { catalog, GENRES } from "@/lib/catalog";
 
 export const Route = createFileRoute("/janrlar")({
@@ -27,6 +29,7 @@ export const Route = createFileRoute("/janrlar")({
 function JanrlarPage() {
   const [active, setActive] = useState<string>(GENRES[0]!);
   const list = catalog.filter((t) => t.genres.includes(active));
+  const { currentItems, page, totalPages, setPage } = usePagination(list, 12);
 
   return (
     <Layout>
@@ -49,7 +52,8 @@ function JanrlarPage() {
         </div>
 
         <h2 className="pt-4 text-2xl">{active} janrida</h2>
-        <TitleGrid items={list} emptyText="Bu janrda hozircha kino yo'q." />
+        <TitleGrid items={currentItems} emptyText="Bu janrda hozircha kino yo'q." />
+        <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
     </Layout>
   );
