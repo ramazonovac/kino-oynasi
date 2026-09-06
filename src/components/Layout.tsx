@@ -3,12 +3,14 @@ import { Header } from "./Header";
 import { Logo } from "./Logo";
 import { VisitorCounter } from "./VisitorCounter";
 import { OrderMovieFab } from "./OrderMovieButton";
+import { ScrollToTop } from "./ScrollToTop";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1 pb-20 md:pb-0">{children}</main>
+      <ScrollToTop />
       <OrderMovieFab />
       <footer className="mt-16 border-t border-border/60 bg-card/40 pb-20 pt-10 md:pb-10">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between">

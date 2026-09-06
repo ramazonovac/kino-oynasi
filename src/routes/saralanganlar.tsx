@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Layout } from "@/components/Layout";
 import { TitleGrid } from "@/components/TitleGrid";
+import { Pagination } from "@/components/Pagination";
+import { usePagination } from "@/hooks/use-pagination";
 import { catalog } from "@/lib/catalog";
 import { useFavorites } from "@/hooks/use-favorites";
 
@@ -24,6 +26,7 @@ export const Route = createFileRoute("/saralanganlar")({
 function SaralanganlarPage() {
   const { ids, ready } = useFavorites();
   const list = catalog.filter((t) => ids.includes(t.id));
+  const { currentItems, page, totalPages, setPage } = usePagination(list, 12);
 
   return (
     <Layout>
@@ -36,11 +39,14 @@ function SaralanganlarPage() {
             ))}
           </div>
         ) : (
-          <TitleGrid
-            items={list}
-            emptyTitle="Ro'yxat bo'sh"
-            emptyText="Filmlar sahifasidan yoqqan kinoni yurakcha tugmasi orqali qo'shing."
-          />
+          <div className="space-y-6">
+            <TitleGrid
+              items={currentItems}
+              emptyTitle="Ro'yxat bo'sh"
+              emptyText="Filmlar sahifasidan yoqqan kinoni yurakcha tugmasi orqali qo'shing."
+            />
+            <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+          </div>
         )}
       </div>
     </Layout>

@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Layout } from "@/components/Layout";
 import { TitleGrid } from "@/components/TitleGrid";
+import { Pagination } from "@/components/Pagination";
+import { usePagination } from "@/hooks/use-pagination";
 import { films } from "@/lib/catalog";
 
 export const Route = createFileRoute("/filmlar")({
@@ -32,6 +34,7 @@ function FilmlarPage() {
     [],
   );
   const list = genre === "Barchasi" ? films : films.filter((f) => f.genres.includes(genre));
+  const { currentItems, page, totalPages, setPage } = usePagination(list, 12);
 
   return (
     <Layout>
@@ -55,10 +58,11 @@ function FilmlarPage() {
         </div>
 
         <TitleGrid
-          items={list}
+          items={currentItems}
           emptyTitle="Film topilmadi"
           emptyText="Bu janrda hozircha film yo'q."
         />
+        <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
       </div>
     </Layout>
   );
