@@ -39,12 +39,14 @@ function SaralanganlarPage() {
             ))}
           </div>
         ) : (
-          <TitleGrid
-            items={currentItems}
-            emptyTitle="Ro'yxat bo'sh"
-            emptyText="Filmlar sahifasidan yoqqan kinoni yurakcha tugmasi orqali qo'shing."
-          />
-          <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+          <div className="space-y-6">
+            <TitleGrid
+              items={currentItems}
+              emptyTitle="Ro'yxat bo'sh"
+              emptyText="Filmlar sahifasidan yoqqan kinoni yurakcha tugmasi orqali qo'shing."
+            />
+            <Pagination currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+          </div>
         )}
       </div>
     </Layout>
