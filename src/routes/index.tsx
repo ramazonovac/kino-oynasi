@@ -50,7 +50,9 @@ function Index() {
             <span className="text-muted-foreground">{HERO.release}</span>
             <span className="text-muted-foreground">{HERO.genres.join(" · ")}</span>
           </div>
-          <h1 className="max-w-3xl text-5xl leading-none sm:text-6xl md:text-7xl">{HERO.title}</h1>
+          <h1 className="max-w-3xl break-words text-3xl leading-tight sm:text-6xl sm:leading-none md:text-7xl">
+            {HERO.title}
+          </h1>
           <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
             {HERO.country}
             {HERO.studio ? ` · Studiya: ${HERO.studio}` : ""}
