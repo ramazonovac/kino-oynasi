@@ -2,7 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Play } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { TitleGrid } from "@/components/TitleGrid";
+import { useMemo } from "react";
 import { films, series, HERO } from "@/lib/catalog";
+import { useDbMovies } from "@/lib/db-movies";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,6 +28,10 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const { films: dbFilms, series: dbSeries } = useDbMovies();
+  const allFilms = useMemo(() => [...dbFilms, ...films], [dbFilms]);
+  const allSeries = useMemo(() => [...dbSeries, ...series], [dbSeries]);
+
   return (
     <Layout>
       <section className="relative min-h-[68vh] w-full overflow-hidden md:min-h-[78vh]">
@@ -68,11 +74,11 @@ function Index() {
       <div className="mx-auto max-w-7xl space-y-12 px-4 py-12">
         <section className="space-y-4">
           <h2 className="text-2xl sm:text-3xl">Filmlar</h2>
-          <TitleGrid items={films} />
+          <TitleGrid items={allFilms} />
         </section>
         <section className="space-y-4">
           <h2 className="text-2xl sm:text-3xl">Seriallar</h2>
-          <TitleGrid items={series} />
+          <TitleGrid items={allSeries} />
         </section>
       </div>
     </Layout>
