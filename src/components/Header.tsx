@@ -56,7 +56,9 @@ export function Header() {
               />
             </form>
               <OrderMovieButton className="hidden lg:inline-flex" />
-              <ThemeToggle className="ml-auto shrink-0 md:ml-0" />
+              <div className="ml-auto shrink-0 md:ml-0">
+                <ThemeToggle />
+              </div>
             </div>
         </div>
       </header>
