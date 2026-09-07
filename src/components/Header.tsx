@@ -20,7 +20,7 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-        <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 md:flex md:gap-6">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3 md:flex-nowrap md:gap-6">
           <Logo />
 
           <nav className="hidden items-center gap-1 md:flex">
@@ -38,7 +38,7 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex w-full items-center gap-2 md:ml-auto md:w-auto">
+          <div className="order-last flex w-full items-center gap-2 md:order-none md:ml-auto md:w-auto">
             <form
               className="relative w-full md:max-w-xs"
               onSubmit={(e) => {
@@ -56,7 +56,7 @@ export function Header() {
               />
             </form>
               <OrderMovieButton className="hidden lg:inline-flex" />
-              <ThemeToggle />
+              <ThemeToggle className="ml-auto shrink-0 md:ml-0" />
             </div>
         </div>
       </header>
