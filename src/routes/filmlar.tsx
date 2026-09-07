@@ -30,11 +30,14 @@ export const Route = createFileRoute("/filmlar")({
 
 function FilmlarPage() {
   const [genre, setGenre] = useState<string>("Barchasi");
+  const { films: dbFilms } = useDbMovies();
+  const allFilms = useMemo(() => [...dbFilms, ...films], [dbFilms]);
   const genres = useMemo(
-    () => Array.from(new Set(films.flatMap((f) => f.genres))).sort((a, b) => a.localeCompare(b)),
-    [],
+    () => Array.from(new Set(allFilms.flatMap((f) => f.genres))).sort((a, b) => a.localeCompare(b)),
+    [allFilms],
   );
-  const list = genre === "Barchasi" ? films : films.filter((f) => f.genres.includes(genre));
+  const list =
+    genre === "Barchasi" ? allFilms : allFilms.filter((f) => f.genres.includes(genre));
   const { currentItems, page, totalPages, setPage } = usePagination(list, 12);
 
   return (
