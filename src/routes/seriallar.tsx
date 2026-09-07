@@ -25,7 +25,9 @@ export const Route = createFileRoute("/seriallar")({
 });
 
 function SeriallarPage() {
-  const { currentItems, page, totalPages, setPage } = usePagination(series, 12);
+  const { series: dbSeries } = useDbMovies();
+  const allSeries = useMemo(() => [...dbSeries, ...series], [dbSeries]);
+  const { currentItems, page, totalPages, setPage } = usePagination(allSeries, 12);
 
   return (
     <Layout>
