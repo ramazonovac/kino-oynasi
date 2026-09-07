@@ -4,6 +4,8 @@ import { TitleGrid } from "@/components/TitleGrid";
 import { Pagination } from "@/components/Pagination";
 import { usePagination } from "@/hooks/use-pagination";
 import { series } from "@/lib/catalog";
+import { useDbMovies } from "@/lib/db-movies";
+import { useMemo } from "react";
 
 export const Route = createFileRoute("/seriallar")({
   head: () => ({
