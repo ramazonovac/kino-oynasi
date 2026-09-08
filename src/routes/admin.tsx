@@ -139,6 +139,10 @@ function AdminDashboard() {
         className="space-y-4 rounded-2xl border border-border bg-card p-6 shadow-cine"
         onSubmit={async (e) => {
           e.preventDefault();
+          if (!form.poster_url) {
+            toast.error("Avval poster rasmini yuklang");
+            return;
+          }
           setBusy(true);
           try {
             await create({
