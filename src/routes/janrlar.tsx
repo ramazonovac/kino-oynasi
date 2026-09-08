@@ -30,7 +30,12 @@ export const Route = createFileRoute("/janrlar")({
 
 function JanrlarPage() {
   const [active, setActive] = useState<string>(GENRES[0]!);
-  const list = catalog.filter((t) => t.genres.includes(active));
+  const { rows } = useDbMovies();
+  const allTitles = useMemo(
+    () => [...rows.map(rowToTitle), ...catalog],
+    [rows],
+  );
+  const list = allTitles.filter((t) => t.genres.includes(active));
   const { currentItems, page, totalPages, setPage } = usePagination(list, 12);
 
   return (
