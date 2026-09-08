@@ -105,6 +105,29 @@ const emptyForm = {
   is_series: false,
 };
 
+const GENRES = [
+  "Jangari",
+  "Drama",
+  "Komediya",
+  "Fantastika",
+  "Melodrama",
+  "Detektiv",
+  "Sarguzasht",
+  "Qo'rqinchli",
+];
+
+function selectedGenres(value: string) {
+  return value.split(",").map((g) => g.trim()).filter(Boolean);
+}
+
+function toggleGenre(current: string, genre: string) {
+  const list = selectedGenres(current);
+  if (list.includes(genre)) {
+    return list.filter((g) => g !== genre).join(", ");
+  }
+  return [...list, genre].join(", ");
+}
+
 function AdminDashboard() {
   const qc = useQueryClient();
   const create = useServerFn(addMovie);
