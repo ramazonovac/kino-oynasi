@@ -2,6 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Play } from "lucide-react";
 import { Layout } from "@/components/Layout";
 import { TitleGrid } from "@/components/TitleGrid";
+import { Pagination } from "@/components/Pagination";
+import { usePagination } from "@/hooks/use-pagination";
 import { useMemo } from "react";
 import { films, series, HERO } from "@/lib/catalog";
 import { useDbMovies } from "@/lib/db-movies";
