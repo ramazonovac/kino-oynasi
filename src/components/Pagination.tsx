@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface PaginationProps {
   currentPage: number;
@@ -7,15 +8,18 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
-function getVisiblePages(current: number, total: number): (number | "ellipsis")[] {
-  if (total <= 7) {
+function getVisiblePages(current: number, total: number, isMobile: boolean): (number | "ellipsis")[] {
+  const sibling = isMobile ? 0 : 1;
+  const maxButtons = isMobile ? 5 : 7;
+
+  if (total <= maxButtons) {
     return Array.from({ length: total }, (_, i) => i + 1);
   }
 
   const pages: (number | "ellipsis")[] = [1];
 
-  const start = Math.max(2, current - 1);
-  const end = Math.min(total - 1, current + 1);
+  const start = Math.max(2, current - sibling);
+  const end = Math.min(total - 1, current + sibling);
 
   if (start > 2) {
     pages.push("ellipsis");
@@ -34,33 +38,38 @@ function getVisiblePages(current: number, total: number): (number | "ellipsis")[
 }
 
 export function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+  const isMobile = useIsMobile();
+
   if (totalPages <= 1) return null;
 
-  const pages = getVisiblePages(currentPage, totalPages);
+  const pages = getVisiblePages(currentPage, totalPages, isMobile);
 
   return (
-    <nav aria-label="Sahifalar" className="flex items-center justify-center gap-2 pt-6">
+    <nav
+      aria-label="Sahifalar"
+      className="flex flex-wrap items-center justify-center gap-1.5 pt-6 sm:gap-2"
+    >
       <button
         type="button"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         aria-label="Oldingi sahifa"
         className={cn(
-          "grid h-10 w-10 place-items-center rounded-full border transition-colors",
+          "grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors sm:h-10 sm:w-10",
           currentPage === 1
-            ? "border-border bg-secondary/50 text-muted-foreground cursor-not-allowed opacity-60"
+            ? "cursor-not-allowed border-border bg-secondary/50 text-muted-foreground opacity-60"
             : "border-border bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground",
         )}
       >
-        <ChevronLeft className="h-5 w-5" />
+        <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
       </button>
 
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center gap-1 sm:gap-1.5">
         {pages.map((p, idx) =>
           p === "ellipsis" ? (
             <span
               key={`ellipsis-${idx}`}
-              className="flex h-10 w-8 items-end justify-center pb-1 text-sm text-muted-foreground"
+              className="flex h-9 w-6 items-end justify-center pb-1 text-sm text-muted-foreground sm:h-10 sm:w-8"
             >
               …
             </span>
@@ -72,7 +81,7 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
               aria-current={currentPage === p ? "page" : undefined}
               aria-label={`Sahifa ${p}`}
               className={cn(
-                "h-10 min-w-10 rounded-full px-3 text-sm font-semibold transition-colors",
+                "h-9 min-w-9 shrink-0 rounded-full px-2.5 text-sm font-semibold transition-colors sm:h-10 sm:min-w-10 sm:px-3",
                 currentPage === p
                   ? "bg-primary text-primary-foreground"
                   : "border border-border bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -90,13 +99,13 @@ export function Pagination({ currentPage, totalPages, onPageChange }: Pagination
         disabled={currentPage === totalPages}
         aria-label="Keyingi sahifa"
         className={cn(
-          "grid h-10 w-10 place-items-center rounded-full border transition-colors",
+          "grid h-9 w-9 shrink-0 place-items-center rounded-full border transition-colors sm:h-10 sm:w-10",
           currentPage === totalPages
-            ? "border-border bg-secondary/50 text-muted-foreground cursor-not-allowed opacity-60"
+            ? "cursor-not-allowed border-border bg-secondary/50 text-muted-foreground opacity-60"
             : "border-border bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground",
         )}
       >
-        <ChevronRight className="h-5 w-5" />
+        <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
       </button>
     </nav>
   );
