@@ -112,6 +112,8 @@ function AdminDashboard() {
   const logout = useServerFn(adminLogout);
   const [form, setForm] = useState(emptyForm);
   const [busy, setBusy] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const upload = useServerFn(uploadPoster);
 
   const moviesQuery = useQuery({ queryKey: ["movies"], queryFn: fetchMovies });
 
