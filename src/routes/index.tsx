@@ -33,6 +33,8 @@ function Index() {
   const { films: dbFilms, series: dbSeries } = useDbMovies();
   const allFilms = useMemo(() => [...dbFilms, ...films], [dbFilms]);
   const allSeries = useMemo(() => [...dbSeries, ...series], [dbSeries]);
+  const filmsPager = usePagination(allFilms, 12);
+  const seriesPager = usePagination(allSeries, 12);
 
   return (
     <Layout>
