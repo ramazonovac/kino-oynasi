@@ -275,16 +275,25 @@ function AdminDashboard() {
             />
           </label>
 
-          <label className="space-y-1.5">
-            <span className="text-sm text-muted-foreground">Janr (vergul bilan)</span>
-            <input
-              required
-              value={form.genre}
-              onChange={(e) => set("genre", e.target.value)}
-              placeholder="Jangari, Drama"
-              className={inputClass}
-            />
-          </label>
+          <div className="space-y-2 sm:col-span-2">
+            <span className="text-sm text-muted-foreground">Janrlar</span>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+              {GENRES.map((g) => (
+                <label
+                  key={g}
+                  className="flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-secondary/40 p-2.5 text-sm transition-colors hover:bg-secondary"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedGenres(form.genre).includes(g)}
+                    onChange={() => set("genre", toggleGenre(form.genre, g))}
+                    className="h-4 w-4 accent-[hsl(var(--primary))]"
+                  />
+                  {g}
+                </label>
+              ))}
+            </div>
+          </div>
 
           <label className="space-y-1.5">
             <span className="text-sm text-muted-foreground">Chiqarilgan yili</span>
