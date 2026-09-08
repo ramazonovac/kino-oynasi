@@ -185,17 +185,55 @@ function AdminDashboard() {
             />
           </label>
 
-          <label className="space-y-1.5 sm:col-span-2">
-            <span className="text-sm text-muted-foreground">Poster rasm havolasi (URL)</span>
-            <input
-              required
-              type="url"
-              placeholder="https://..."
-              value={form.poster_url}
-              onChange={(e) => set("poster_url", e.target.value)}
-              className={inputClass}
-            />
-          </label>
+          <div className="space-y-1.5 sm:col-span-2">
+            <span className="text-sm text-muted-foreground">Poster rasm (galereyadan tanlang)</span>
+            <div className="flex items-start gap-3">
+              {form.poster_url && (
+                <img
+                  src={form.poster_url}
+                  alt="Tanlangan poster"
+                  className="h-24 w-16 rounded-md border border-border object-cover"
+                />
+              )}
+              <input
+                type="file"
+                accept="image/*"
+                disabled={uploading}
+                onChange={async (e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  if (file.size > 10 * 1024 * 1024) {
+                    toast.error("Rasm hajmi 10MB dan oshmasin");
+                    return;
+                  }
+                  setUploading(true);
+                  try {
+                    const buf = await file.arrayBuffer();
+                    let binary = "";
+                    const view = new Uint8Array(buf);
+                    for (let i = 0; i < view.length; i += 0x8000) {
+                      binary += String.fromCharCode(...view.subarray(i, i + 0x8000));
+                    }
+                    const res = await upload({
+                      data: {
+                        fileName: file.name,
+                        contentType: file.type || "image/jpeg",
+                        dataBase64: btoa(binary),
+                      },
+                    });
+                    set("poster_url", res.url);
+                    toast.success("Rasm yuklandi");
+                  } catch (err) {
+                    toast.error(err instanceof Error ? err.message : "Rasm yuklanmadi");
+                  } finally {
+                    setUploading(false);
+                  }
+                }}
+                className={`${inputClass} file:mr-3 file:rounded-lg file:border-0 file:bg-secondary file:px-3 file:py-1.5 file:text-sm file:text-foreground`}
+              />
+            </div>
+            {uploading && <p className="text-xs text-muted-foreground">Yuklanmoqda...</p>}
+          </div>
 
           <label className="space-y-1.5 sm:col-span-2">
             <span className="text-sm text-muted-foreground">Video / Telegram havolasi</span>
