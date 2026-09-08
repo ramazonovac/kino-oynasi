@@ -166,6 +166,10 @@ function AdminDashboard() {
             toast.error("Avval poster rasmini yuklang");
             return;
           }
+          if (!selectedGenres(form.genre).length) {
+            toast.error("Kamida bitta janr tanlang");
+            return;
+          }
           setBusy(true);
           try {
             await create({
