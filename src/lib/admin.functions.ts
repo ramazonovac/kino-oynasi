@@ -50,6 +50,33 @@ export const adminStatus = createServerFn({ method: "GET" }).handler(async () =>
   return { unlocked: Boolean(session.data.unlocked) };
 });
 
+const posterSchema = z.object({
+  fileName: z.string().trim().min(1).max(200),
+  contentType: z.string().trim().min(1).max(100),
+  dataBase64: z.string().min(1).max(14_000_000),
+});
+
+export const uploadPoster = createServerFn({ method: "POST" })
+  .inputValidator((data: z.infer<typeof posterSchema>) => posterSchema.parse(data))
+  .handler(async ({ data }) => {
+    await requireUnlocked();
+    if (!data.contentType.startsWith("image/")) throw new Error("Faqat rasm yuklash mumkin");
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const bytes = Buffer.from(data.dataBase64, "base64");
+    if (bytes.byteLength > 10 * 1024 * 1024) throw new Error("Rasm hajmi 10MB dan katta");
+    const ext = (data.fileName.split(".").pop() ?? "jpg").toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
+    const path = `${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${ext}`;
+    const { error } = await supabaseAdmin.storage
+      .from("posters")
+      .upload(path, bytes, { contentType: data.contentType, upsert: false });
+    if (error) throw new Error(error.message);
+    const { data: signed, error: signErr } = await supabaseAdmin.storage
+      .from("posters")
+      .createSignedUrl(path, 60 * 60 * 24 * 365 * 10);
+    if (signErr || !signed) throw new Error(signErr?.message ?? "URL yaratilmadi");
+    return { url: signed.signedUrl };
+  });
+
 const movieSchema = z.object({
   title: z.string().trim().min(1).max(200),
   description: z.string().trim().max(2000).optional().or(z.literal("")),
