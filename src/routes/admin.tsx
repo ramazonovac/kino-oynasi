@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Trash2, Lock, LogOut } from "lucide-react";
 import { Layout } from "@/components/Layout";
-import { adminLogin, adminLogout, adminStatus, addMovie, deleteMovie } from "@/lib/admin.functions";
+import { adminLogin, adminLogout, adminStatus, addMovie, deleteMovie, uploadPoster } from "@/lib/admin.functions";
 import { fetchMovies } from "@/lib/db-movies";
 
 export const Route = createFileRoute("/admin")({
