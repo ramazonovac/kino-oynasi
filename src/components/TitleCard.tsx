@@ -72,7 +72,9 @@ export function TitleCard({ item, className }: { item: Title; className?: string
 
       <div className="flex flex-1 flex-col gap-1 p-2.5 sm:gap-2 sm:p-3 lg:p-4">
         <h3 className="line-clamp-2 text-sm font-semibold leading-tight sm:text-base lg:text-xl">
-          {item.title}
+          <Link to="/kino/$id" params={{ id: item.id }} className="transition-colors hover:text-primary">
+            {item.title}
+          </Link>
         </h3>
         {item.originalTitle ? (
           <p className="line-clamp-1 text-[10px] text-muted-foreground sm:text-xs">{item.originalTitle}</p>
