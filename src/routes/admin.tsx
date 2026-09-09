@@ -291,7 +291,7 @@ function AdminDashboard() {
                     type="checkbox"
                     checked={selectedGenres(form.genre).includes(g)}
                     onChange={() => set("genre", toggleGenre(form.genre, g))}
-                    className="h-4 w-4 accent-primary"
+                    className="h-4 w-4 accent-[hsl(var(--primary))]"
                   />
                   {g}
                 </label>
@@ -316,7 +316,7 @@ function AdminDashboard() {
               type="checkbox"
               checked={form.is_series}
               onChange={(e) => set("is_series", e.target.checked)}
-              className="h-4 w-4 accent-primary"
+              className="h-4 w-4 accent-[hsl(var(--primary))]"
             />
             Serial sifatida qo'shish
           </label>
