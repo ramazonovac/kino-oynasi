@@ -38,9 +38,12 @@ export function TitleCard({ item, className }: { item: Title; className?: string
         className,
       )}
     >
-      <div
+      <Link
+        to="/kino/$id"
+        params={{ id: item.id }}
+        aria-label={`${item.title} haqida batafsil`}
         className={cn(
-          "relative overflow-hidden",
+          "relative block overflow-hidden",
           item.wide ? "aspect-video" : "aspect-[2/3]",
         )}
       >
