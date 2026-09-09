@@ -68,17 +68,6 @@ export function TitleCard({ item, className }: { item: Title; className?: string
         >
           <Heart className={cn("h-3 w-3 sm:h-4 sm:w-4", fav && "fill-primary text-primary")} />
         </button>
-          type="button"
-          onClick={() => {
-            const added = toggle(item.id);
-            toast(added ? "Saralanganlarga qo'shildi" : "Saralanganlardan o'chirildi");
-          }}
-          aria-label="Saralanganlarga qo'shish"
-          className="absolute right-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-background/70 backdrop-blur transition-colors hover:bg-primary sm:right-2 sm:top-2 sm:h-8 sm:w-8"
-        >
-          <Heart className={cn("h-3 w-3 sm:h-4 sm:w-4", fav && "fill-primary text-primary")} />
-        </button>
-      </div>
 
       <div className="flex flex-1 flex-col gap-1 p-2.5 sm:gap-2 sm:p-3 lg:p-4">
         <h3 className="line-clamp-2 text-sm font-semibold leading-tight sm:text-base lg:text-xl">
