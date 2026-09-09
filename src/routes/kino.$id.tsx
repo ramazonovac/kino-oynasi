@@ -28,7 +28,7 @@ export const Route = createFileRoute("/kino/$id")({
   component: MovieDetails,
 });
 
-function InfoRow({ label, value }: { label: string; value?: string | number }) {
+function InfoRow({ label, value }: { label: string; value: string | number | undefined }) {
   if (!value) return null;
   return (
     <div className="flex flex-wrap gap-2 border-b border-border/50 py-2 text-sm">

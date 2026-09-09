@@ -16,6 +16,7 @@ import { Route as JanrlarRouteImport } from './routes/janrlar'
 import { Route as QidiruvRouteImport } from './routes/qidiruv'
 import { Route as SaralanganlarRouteImport } from './routes/saralanganlar'
 import { Route as SeriallarRouteImport } from './routes/seriallar'
+import { Route as KinoIdRouteImport } from './routes/kino.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,11 @@ const SeriallarRoute = SeriallarRouteImport.update({
   path: '/seriallar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const KinoIdRoute = KinoIdRouteImport.update({
+  id: '/kino/$id',
+  path: '/kino/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/qidiruv': typeof QidiruvRoute
   '/saralanganlar': typeof SaralanganlarRoute
   '/seriallar': typeof SeriallarRoute
+  '/kino/$id': typeof KinoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/qidiruv': typeof QidiruvRoute
   '/saralanganlar': typeof SaralanganlarRoute
   '/seriallar': typeof SeriallarRoute
+  '/kino/$id': typeof KinoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/qidiruv': typeof QidiruvRoute
   '/saralanganlar': typeof SaralanganlarRoute
   '/seriallar': typeof SeriallarRoute
+  '/kino/$id': typeof KinoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/qidiruv'
     | '/saralanganlar'
     | '/seriallar'
+    | '/kino/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/qidiruv'
     | '/saralanganlar'
     | '/seriallar'
+    | '/kino/$id'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/qidiruv'
     | '/saralanganlar'
     | '/seriallar'
+    | '/kino/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +131,7 @@ export interface RootRouteChildren {
   QidiruvRoute: typeof QidiruvRoute
   SaralanganlarRoute: typeof SaralanganlarRoute
   SeriallarRoute: typeof SeriallarRoute
+  KinoIdRoute: typeof KinoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SeriallarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/kino/$id': {
+      id: '/kino/$id'
+      path: '/kino/$id'
+      fullPath: '/kino/$id'
+      preLoaderRoute: typeof KinoIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   QidiruvRoute: QidiruvRoute,
   SaralanganlarRoute: SaralanganlarRoute,
   SeriallarRoute: SeriallarRoute,
+  KinoIdRoute: KinoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
