@@ -1,4 +1,5 @@
 import { Play, Heart } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import type { Title } from "@/lib/catalog";
 import { useFavorites } from "@/hooks/use-favorites";
