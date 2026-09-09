@@ -56,7 +56,18 @@ export function TitleCard({ item, className }: { item: Title; className?: string
         <span className="absolute left-1.5 top-1.5 rounded-full bg-background/70 px-1.5 py-0.5 text-[10px] font-semibold text-gold backdrop-blur sm:left-2 sm:top-2 sm:px-2 sm:py-1 sm:text-xs">
           {item.ageRating}
         </span>
-        <button
+      </Link>
+      <button
+          type="button"
+          onClick={() => {
+            const added = toggle(item.id);
+            toast(added ? "Saralanganlarga qo'shildi" : "Saralanganlardan o'chirildi");
+          }}
+          aria-label="Saralanganlarga qo'shish"
+          className="absolute right-1.5 top-1.5 z-10 grid h-6 w-6 place-items-center rounded-full bg-background/70 backdrop-blur transition-colors hover:bg-primary sm:right-2 sm:top-2 sm:h-8 sm:w-8"
+        >
+          <Heart className={cn("h-3 w-3 sm:h-4 sm:w-4", fav && "fill-primary text-primary")} />
+        </button>
           type="button"
           onClick={() => {
             const added = toggle(item.id);
