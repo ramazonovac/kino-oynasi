@@ -80,11 +80,21 @@ function Index() {
       <div className="mx-auto max-w-7xl space-y-12 px-4 py-12">
         <section className="space-y-4">
           <h2 className="text-2xl sm:text-3xl">Filmlar</h2>
-          <TitleGrid items={allFilms} />
+          <TitleGrid items={filmsPager.currentItems} />
+          <Pagination
+            currentPage={filmsPager.page}
+            totalPages={filmsPager.totalPages}
+            onPageChange={filmsPager.setPage}
+          />
         </section>
         <section className="space-y-4">
           <h2 className="text-2xl sm:text-3xl">Seriallar</h2>
-          <TitleGrid items={allSeries} />
+          <TitleGrid items={seriesPager.currentItems} />
+          <Pagination
+            currentPage={seriesPager.page}
+            totalPages={seriesPager.totalPages}
+            onPageChange={seriesPager.setPage}
+          />
         </section>
       </div>
     </Layout>

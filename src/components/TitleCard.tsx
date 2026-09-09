@@ -1,4 +1,5 @@
 import { Play, Heart } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import type { Title } from "@/lib/catalog";
 import { useFavorites } from "@/hooks/use-favorites";
@@ -38,9 +39,12 @@ export function TitleCard({ item, className }: { item: Title; className?: string
         className,
       )}
     >
-      <div
+      <Link
+        to="/kino/$id"
+        params={{ id: item.id }}
+        aria-label={`${item.title} haqida batafsil`}
         className={cn(
-          "relative overflow-hidden",
+          "relative block overflow-hidden",
           item.wide ? "aspect-video" : "aspect-[2/3]",
         )}
       >
@@ -53,22 +57,24 @@ export function TitleCard({ item, className }: { item: Title; className?: string
         <span className="absolute left-1.5 top-1.5 rounded-full bg-background/70 px-1.5 py-0.5 text-[10px] font-semibold text-gold backdrop-blur sm:left-2 sm:top-2 sm:px-2 sm:py-1 sm:text-xs">
           {item.ageRating}
         </span>
-        <button
+      </Link>
+      <button
           type="button"
           onClick={() => {
             const added = toggle(item.id);
             toast(added ? "Saralanganlarga qo'shildi" : "Saralanganlardan o'chirildi");
           }}
           aria-label="Saralanganlarga qo'shish"
-          className="absolute right-1.5 top-1.5 grid h-6 w-6 place-items-center rounded-full bg-background/70 backdrop-blur transition-colors hover:bg-primary sm:right-2 sm:top-2 sm:h-8 sm:w-8"
+          className="absolute right-1.5 top-1.5 z-10 grid h-6 w-6 place-items-center rounded-full bg-background/70 backdrop-blur transition-colors hover:bg-primary sm:right-2 sm:top-2 sm:h-8 sm:w-8"
         >
           <Heart className={cn("h-3 w-3 sm:h-4 sm:w-4", fav && "fill-primary text-primary")} />
         </button>
-      </div>
 
       <div className="flex flex-1 flex-col gap-1 p-2.5 sm:gap-2 sm:p-3 lg:p-4">
         <h3 className="line-clamp-2 text-sm font-semibold leading-tight sm:text-base lg:text-xl">
-          {item.title}
+          <Link to="/kino/$id" params={{ id: item.id }} className="transition-colors hover:text-primary">
+            {item.title}
+          </Link>
         </h3>
         {item.originalTitle ? (
           <p className="line-clamp-1 text-[10px] text-muted-foreground sm:text-xs">{item.originalTitle}</p>
