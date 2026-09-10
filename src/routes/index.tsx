@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Play } from "lucide-react";
 import { Layout } from "@/components/Layout";
+import { HeroSlider } from "@/components/HeroSlider";
 import { TitleGrid } from "@/components/TitleGrid";
 import { Pagination } from "@/components/Pagination";
 import { usePagination } from "@/hooks/use-pagination";
 import { useMemo } from "react";
-import { films, series, HERO } from "@/lib/catalog";
+import { catalog, films, series } from "@/lib/catalog";
 import { useDbMovies } from "@/lib/db-movies";
 
 export const Route = createFileRoute("/")({
@@ -33,49 +33,17 @@ function Index() {
   const { films: dbFilms, series: dbSeries } = useDbMovies();
   const allFilms = useMemo(() => [...dbFilms, ...films], [dbFilms]);
   const allSeries = useMemo(() => [...dbSeries, ...series], [dbSeries]);
+  const featuredTitles = useMemo(() => {
+    const databaseTitles = [...dbFilms, ...dbSeries];
+    const fallbackTitles = catalog.filter((item) => !databaseTitles.some((movie) => movie.id === item.id));
+    return [...databaseTitles, ...fallbackTitles].slice(0, 6);
+  }, [dbFilms, dbSeries]);
   const filmsPager = usePagination(allFilms, 12);
   const seriesPager = usePagination(allSeries, 12);
 
   return (
     <Layout>
-      <section className="relative min-h-[68vh] w-full overflow-hidden md:min-h-[78vh]">
-        <img
-          src={HERO.poster}
-          alt={`${HERO.title} filmidan kadr`}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 hero-fade" />
-        <div className="relative mx-auto flex min-h-[68vh] max-w-7xl flex-col justify-end gap-4 px-4 pb-12 pt-24 md:min-h-[78vh] md:pb-20">
-          <div className="flex flex-wrap items-center gap-2 text-sm">
-            <span className="rounded-full brand-gradient px-3 py-1 text-xs font-semibold text-primary-foreground">
-              Tanlangan
-            </span>
-            <span className="text-gold">{HERO.ageRating}</span>
-            <span className="text-muted-foreground">{HERO.release}</span>
-            <span className="text-muted-foreground">{HERO.genres.join(" · ")}</span>
-          </div>
-          <h1 className="max-w-3xl break-words text-3xl leading-tight sm:text-6xl sm:leading-none md:text-7xl">
-            {HERO.title}
-          </h1>
-          <p className="max-w-xl text-sm text-muted-foreground sm:text-base">
-            {HERO.country}
-            {HERO.studio ? ` · Studiya: ${HERO.studio}` : ""}
-            {HERO.episodes ? ` · ${HERO.episodes}` : ""}
-            {HERO.director ? ` · Rejissyor: ${HERO.director}` : ""}
-            {HERO.actor ? ` · Bosh rolda: ${HERO.actor}` : ""}
-          </p>
-          <div className="mt-2 flex flex-wrap gap-3">
-            <a
-              href={HERO.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl brand-gradient px-6 py-3 font-semibold text-primary-foreground glow-ring transition-transform hover:scale-105"
-            >
-              <Play className="h-5 w-5 fill-current" /> Tomosha qilish
-            </a>
-          </div>
-        </div>
-      </section>
+      <HeroSlider items={featuredTitles} />
 
       <div className="mx-auto max-w-7xl space-y-12 px-4 py-12">
         <section className="space-y-4">
