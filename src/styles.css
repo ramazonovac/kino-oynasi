@@ -47,7 +47,7 @@
   --card-foreground: oklch(0.2 0.02 285);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.02 285);
-  --primary: oklch(0.55 0.23 22);
+  --primary: oklch(0.49 0.12 190);
   --primary-foreground: oklch(0.99 0 0);
   --secondary: oklch(0.94 0.008 285);
   --secondary-foreground: oklch(0.25 0.02 285);
@@ -59,7 +59,7 @@
   --destructive-foreground: oklch(0.99 0 0);
   --border: oklch(0.9 0.01 285);
   --input: oklch(0.9 0.01 285);
-  --ring: oklch(0.55 0.23 22);
+  --ring: oklch(0.49 0.12 190);
   --gold: oklch(0.62 0.14 75);
   --gradient-hero: linear-gradient(
     to top,
@@ -67,9 +67,9 @@
     oklch(0.98 0.005 285 / 0.75) 45%,
     oklch(0.98 0.005 285 / 0.05) 100%
   );
-  --gradient-brand: linear-gradient(120deg, oklch(0.55 0.23 22), oklch(0.68 0.19 45));
+  --gradient-brand: linear-gradient(120deg, oklch(0.49 0.12 190), oklch(0.57 0.13 175));
   --shadow-cine: 0 18px 40px -24px oklch(0.2 0.02 285 / 0.35);
-  --shadow-glow: 0 0 40px -8px oklch(0.55 0.23 22 / 0.35);
+  --shadow-glow: 0 0 40px -8px oklch(0.49 0.12 190 / 0.35);
 }
 
 .dark {
