@@ -10,12 +10,16 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FilmlarRouteImport } from './routes/filmlar'
 import { Route as JanrlarRouteImport } from './routes/janrlar'
 import { Route as QidiruvRouteImport } from './routes/qidiruv'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SaralanganlarRouteImport } from './routes/saralanganlar'
 import { Route as SeriallarRouteImport } from './routes/seriallar'
+import { Route as AuthenticatedProfilRouteImport } from './routes/_authenticated/profil'
 import { Route as KinoIdRouteImport } from './routes/kino.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,9 +27,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FilmlarRoute = FilmlarRouteImport.update({
@@ -43,6 +56,11 @@ const QidiruvRoute = QidiruvRouteImport.update({
   path: '/qidiruv',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SaralanganlarRoute = SaralanganlarRouteImport.update({
   id: '/saralanganlar',
   path: '/saralanganlar',
@@ -53,6 +71,11 @@ const SeriallarRoute = SeriallarRouteImport.update({
   path: '/seriallar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedProfilRoute = AuthenticatedProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const KinoIdRoute = KinoIdRouteImport.update({
   id: '/kino/$id',
   path: '/kino/$id',
@@ -62,32 +85,42 @@ const KinoIdRoute = KinoIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/filmlar': typeof FilmlarRoute
   '/janrlar': typeof JanrlarRoute
   '/qidiruv': typeof QidiruvRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/saralanganlar': typeof SaralanganlarRoute
   '/seriallar': typeof SeriallarRoute
+  '/profil': typeof AuthenticatedProfilRoute
   '/kino/$id': typeof KinoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/filmlar': typeof FilmlarRoute
   '/janrlar': typeof JanrlarRoute
   '/qidiruv': typeof QidiruvRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/saralanganlar': typeof SaralanganlarRoute
   '/seriallar': typeof SeriallarRoute
+  '/profil': typeof AuthenticatedProfilRoute
   '/kino/$id': typeof KinoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/admin': typeof AdminRoute
+  '/auth': typeof AuthRoute
   '/filmlar': typeof FilmlarRoute
   '/janrlar': typeof JanrlarRoute
   '/qidiruv': typeof QidiruvRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/saralanganlar': typeof SaralanganlarRoute
   '/seriallar': typeof SeriallarRoute
+  '/_authenticated/profil': typeof AuthenticatedProfilRoute
   '/kino/$id': typeof KinoIdRoute
 }
 export interface FileRouteTypes {
@@ -95,40 +128,53 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/auth'
     | '/filmlar'
     | '/janrlar'
     | '/qidiruv'
+    | '/reset-password'
     | '/saralanganlar'
     | '/seriallar'
+    | '/profil'
     | '/kino/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
+    | '/auth'
     | '/filmlar'
     | '/janrlar'
     | '/qidiruv'
+    | '/reset-password'
     | '/saralanganlar'
     | '/seriallar'
+    | '/profil'
     | '/kino/$id'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/admin'
+    | '/auth'
     | '/filmlar'
     | '/janrlar'
     | '/qidiruv'
+    | '/reset-password'
     | '/saralanganlar'
     | '/seriallar'
+    | '/_authenticated/profil'
     | '/kino/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AdminRoute: typeof AdminRoute
+  AuthRoute: typeof AuthRoute
   FilmlarRoute: typeof FilmlarRoute
   JanrlarRoute: typeof JanrlarRoute
   QidiruvRoute: typeof QidiruvRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SaralanganlarRoute: typeof SaralanganlarRoute
   SeriallarRoute: typeof SeriallarRoute
   KinoIdRoute: typeof KinoIdRoute
@@ -143,11 +189,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin': {
       id: '/admin'
       path: '/admin'
       fullPath: '/admin'
       preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/filmlar': {
@@ -171,6 +231,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QidiruvRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/saralanganlar': {
       id: '/saralanganlar'
       path: '/saralanganlar'
@@ -185,6 +252,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SeriallarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/profil': {
+      id: '/_authenticated/profil'
+      path: '/profil'
+      fullPath: '/profil'
+      preLoaderRoute: typeof AuthenticatedProfilRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/kino/$id': {
       id: '/kino/$id'
       path: '/kino/$id'
@@ -195,12 +269,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedProfilRoute: typeof AuthenticatedProfilRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedProfilRoute: AuthenticatedProfilRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AdminRoute: AdminRoute,
+  AuthRoute: AuthRoute,
   FilmlarRoute: FilmlarRoute,
   JanrlarRoute: JanrlarRoute,
   QidiruvRoute: QidiruvRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SaralanganlarRoute: SaralanganlarRoute,
   SeriallarRoute: SeriallarRoute,
   KinoIdRoute: KinoIdRoute,
