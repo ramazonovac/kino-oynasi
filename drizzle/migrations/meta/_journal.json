@@ -8,6 +8,13 @@
       "when": 1789994371310,
       "tag": "0000_create_viewer_profiles",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789994419389,
+      "tag": "0001_secure_avatar_uploads",
+      "breakpoints": true
     }
   ]
 }
